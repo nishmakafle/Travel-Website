@@ -1,0 +1,29 @@
+{% extends 'admintemplates/adminbase.html' %}
+{% load static %}
+
+{% block packagefeaturelist %}active{% endblock %}
+{% block packagefeaturelistid %}active{% endblock %}
+
+{% block title %}Package-Feature Management{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+	<div class="card ">
+		<div class="card-header card-header-primary card-header-text">
+          <div class="card-icon">
+            <i class="material-icons">question_answer</i>
+          </div>
+          <h4 class="card-title">Package-Feature Form</h4>
+        </div>
+    	<form method="POST" enctype="multipart/form-data">
+    		{% csrf_token %}
+    		<div class="row card-body">
+    			<div class="col-md-12">
+	    			{{form.as_p}}
+                	<button class="btn btn-primary">Submit Data</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

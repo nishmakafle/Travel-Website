@@ -1,0 +1,184 @@
+{% extends 'admintemplates/adminbase.html' %}
+
+{% block profileupdate %}active{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+	<div class="card ">
+		<div class="card-header card-header-primary card-header-text">
+          <div class="card-icon">
+            <i class="material-icons">question_answer</i>
+          </div>
+          <h4 class="card-title">Blog Form</h4>
+        </div>
+    	<form method="POST" enctype="multipart/form-data">
+    		{% csrf_token %}
+    		<div class="row card-body">
+    			<div class="col-md-12">
+	    			<div class="row">
+                        <div class="form-group col-md-4">
+                            <label><b>Name :</b></label><br>
+                            {{form.name}}
+    
+                        </div>
+                        <div class="col-md-4">
+                            <label><b>logo :</b></label><br>
+                            {{form.logo}}
+    
+                        </div>
+                        <div class="col-md-4">
+                            <label><b>Profile_Image :</b></label><br>
+                            {{form.profile_image}}
+    
+                        </div>
+                    </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label><b>Profile Video :</b></label><br>
+                                {{form.profile_video}}
+        
+                            </div>
+                            <div class="col-md-4">
+                                <label><b>BackGround_Image :</b></label><br>
+                                {{form.background_image}}
+        
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label><b>VAT-PAN :</b></label><br>
+                                {{form.vat_pan}}
+        
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-4">
+                                <label><b>Address :</b></label><br>
+                                {{form.address}}
+        
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label><b>Office Time :</b></label><br>
+                                {{form.office_time}}
+        
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label><b>Map-Location :</b></label><br>
+                                {{form.map_location}}
+        
+                            </div>
+                            
+                        </div>
+                        <div class="form-group">
+                            <label><b>Slogon :</b></label><br>
+                            {{form.slogan}}
+        
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label><b>Contact_Number :</b></label><br>
+                                {{form.contact_no}}
+        
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label><b>Alt Contact_Number :</b></label><br>
+                                {{form.alt_contact_no}}
+        
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label><b>Email :</b></label><br>
+                                {{form.email}}
+        
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label><b>Alt Email :</b></label><br>
+                                {{form.alt_email}}
+        
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label><b>About_Us :</b></label><br>
+                            {{form.about_us}}
+        
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label><b>Facebook_Link :</b></label><br>
+                                {{form.facebook}}
+        
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label><b>Instagram_Link :</b></label><br>
+                                {{form.instagram}}
+        
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label><b>Twitter_Link :</b></label><br>
+                                {{form.twitter}}
+        
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label><b>Youtube_Link :</b></label><br>
+                                {{form.youtube}}
+        
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label><b>Whatsapp_Link :</b></label><br>
+                                {{form.whatsapp}}
+        
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label><b>Viber_Link :</b></label><br>
+                                {{form.viber}}
+        
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label><b>Terms and Condition :</b></label><br>
+                            {{form.terms_and_conditions}}
+        
+                        </div>
+                        <div class="form-group">
+                            <label><b>Privacy Policy :</b></label><br>
+                            {{form.privacy_policy}}
+        
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label><b>Show Popup :</b></label><br>
+                                {{form.show_popup}}
+        
+                            </div>
+                            <div class="col-md-6">
+                                <label><b>Popup Image :</b></label><br>
+                                {{form.popup_image}}
+        
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label><b>Messenger_Script :</b></label><br>
+                                {{form.messenger_script}}
+        
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label><b>Google_Analytics_Script :</b></label><br>
+                                {{form.google_analytics_script}}
+        
+                            </div> 
+                        
+                    </div>
+                	<button class="btn btn-primary">Submit Data</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'admintemplates/adminbase.html' %}
+{% load static %}
+
+{% block albumlist %}active{% endblock %}
+{% block albumlistid %}active{% endblock %}
+
+{% block title %}Album Management{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+	<div class="card ">
+		<div class="card-header card-header-primary card-header-text">
+          <div class="card-icon">
+            <i class="material-icons">question_answer</i>
+          </div>
+          <h4 class="card-title">album Form</h4>
+        </div>
+    	<form method="POST" enctype="multipart/form-data">
+    		{% csrf_token %}
+    		<div class="row card-body">
+    			<div class="col-md-12">
+            {{form.as_p}}
+            <div class="img-body">
+              {% if view.kwargs.pk %}
+              {% for i in object.image_set.all %}
+              <img src="{{i.image.url}}" width="100" />
+              <a href="#" data-url="{% url 'tntapp:ajaximgdel' i.id %}" class="del-img">X</a>
+              {% endfor %}
+              {% endif %}
+            </div>
+            <br>
+                	<button class="btn btn-primary">Submit Data</button>
+                </div>
+            </div>
+        </form>
+        
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+  {% if view.kwargs %}
+  document.getElementById('id_images').required = false;
+  {% else %}
+  document.getElementById('id_images').required = true;
+  {% endif%}
+</script>
+<script>
+  $(".img-body").on("click", ".del-img", function(e){
+    e.preventDefault();
+    var url = $(this).attr("data-url");
+    $.ajax({
+      url: url,
+      success: function(d){
+        $(".img-body").load(" .img-body")
+      }
+    })
+  })
+</script>
+{% endblock %}

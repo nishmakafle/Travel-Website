@@ -1,0 +1,66 @@
+{% extends 'clienttemplates/clientbase.html' %}
+{% load static %}
+{% block title %}Gallery {% endblock %}
+{% block content %}
+
+    <!-- breadcrumb area start -->
+    <div class="breadcrumb-area jarallax" style="background-image:url({% static 'clientstatic/img/bg/1.png' %});">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-inner">
+                        <h1 class="page-title">Gallery</h1>
+                        <ul class="page-list">
+                            <li><a href="{% url 'tntapp:clienthome' %}">Home</a></li>
+                            <li>Gallery</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb area End -->
+
+    <!-- gallery area start -->
+    <div class="main-gallery-area pd-top-120">
+        <div class="container">
+            <div class="row">
+                {% for album in gallery %}
+                <div class="col-lg-6">
+                    <div class="single-gallery-area bg-gray">
+                        <div class="gallery-title">
+                            <p class="location"><img src="{% static 'clientstatic/img/icons/1.png' %}"  alt="img">Maldives</p>
+                            <h4><a href="{% url 'tntapp:clientgallerydetail' album.id %}">{{album.title}}</a></h4>
+                        </div>
+                        <div class="gallery-slider">
+                            {% for im in album.image_set.all %}
+                            <div class="thumb">
+                                <img src={{im.image.url}} alt="img" style="height:150px;">
+                            </div>
+                            {% endfor %}
+                            
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- gallery area End -->
+
+    <!-- ads area start -->
+    <div class="ads-area pd-top-70">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <a class="ads-thumb" href="#">
+                        <img src="{% static 'clientstatic/img/others/1.png' %} alt="ads">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ads area End -->
+   
+   
+ {% endblock %}

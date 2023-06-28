@@ -1,0 +1,101 @@
+{% extends 'clienttemplates/clientbase.html' %}
+{% load static %}
+
+{% block title %}Terms and Conditions{% endblock %}
+
+{% block content %}
+
+    <!-- breadcrumb area start -->
+    <div class="breadcrumb-area jarallax" style="background-image:url({% static 'clientstatic/img/bg/1.png' %});">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-inner">
+                        <h1 class="page-title">Terms and Conditions</h1>
+                        <ul class="page-list">
+                            <li><a href="{% url 'tntapp:clienthome' %}">Home</a></li>
+                            <li>Terms and Conditions</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb area End -->
+
+    <!-- blog area start -->
+    <div class="faq-page-area pd-top-110">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-9 col-lg-8">
+                    <div class="row">
+                        <div class="col-xl-8">
+                            <div class="section-title mb-0">
+                                <h2 class="title">Terms and Conditions </h2>
+                                <p>Please read our terms and conditions very carefully.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ul class="nav nav-tabs tp-tabs">
+                                {% for terms in alltermsandcondtions %}
+                                <li class="nav-item">
+                                    <p>{{terms.terms_and_conditions|safe}}</p>
+                                </li>
+                                {% endfor %}
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>   
+                <div class="col-xl-3 col-lg-4">
+                    <aside class="sidebar-area">
+                        <div class="widget widget_search bg-none pd-none">
+                            <form class="search-form">
+                                <div class="form-group">
+                                    <input type="text" placeholder="Search">
+                                </div>
+                                <button class="submit-btn" type="submit"><i class="ti-search"></i></button>
+                            </form>
+                        </div>
+                        <div class="widget widget_categories">
+                            <h2 class="widget-title">Also see</h2>
+                            <ul>
+                                {% for page in pages %}
+                                <li><a href="{% url 'tntapp:clientpagedetail' page.slug %}">{{page.title}}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="widget widget_categories">
+                            <h2 class="widget-title">Browse our packages</h2>
+                            <ul>
+                                {% for pc in packagecategorylist %}
+                                <li><a href="{% url 'tntapp:packagecategorydetail' pc.title pc.id %}">{{pc.title}}</a> {{pc.package_set.count}}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="widget widget-recent-post">
+                            <h2 class="widget-title">Recent Post</h2>
+                            <ul>
+                                {% for blog in recentblogs %} 
+                                <li>
+                                    <div class="media">
+                                        <img src="{{blog.image.url}}" alt="widget" style="width: 30%;">
+                                        <div class="media-body">
+                                            <span class="post-date">{{blog.created_at|date}}</span>
+                                            <h6 class="title"><a href="{% url 'tntapp:clientblogdetail' blog.id %}">{{blog.title}}</a></h6>
+                                        </div>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- blog area End -->
+    
+   {% endblock %}

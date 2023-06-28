@@ -1,0 +1,501 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    
+
+    <!-- Favicons -->
+    <link rel="icon" href="{% static 'adminstatic/images/favicon.png' %}">
+
+    <title>{% block title %}{% endblock %} | {{orginfo.name|title}} Admin Panel</title>
+
+
+    <meta charset="UTF-8">
+    <meta name="description" content="CMS fits for every site.">
+    <meta name="keywords" content="Sarobar Technology, sarobar technology, sarobartech, Sarobar, Sarobar Technology Pvt. Ltd."> 
+    <meta name="author" content="Sarobar Technology">
+
+
+    <meta itemprop="name" content="Marigold Dashboard, Sarobar Technology">
+    <meta itemprop="description" content="Marigold Dashboard, A beautiful and powerful CMS made by Sarobar Technology">
+
+
+
+
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+
+ 
+<!-- <link href="{% static 'clientstatic/css/datetimepicker.css' %}" rel="stylesheet"> -->
+
+    <link rel="stylesheet" href="{% static 'adminstatic/css/marigold-dashboard.min.css' %}">
+    <link rel="stylesheet" href="{% static 'adminstatic/css/style.css' %}">
+    <!-- <link rel="stylesheet" href="{% static 'adminstatic/css/select2.min.css' %}" /> -->
+    <link rel="stylesheet" type="text/css" href="{% static 'adminstatic/css/select2.min.css' %}">
+
+
+
+    {% block css %}
+
+
+    {% endblock %}
+
+    <style>
+      .spinner-wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 99999;
+        background-image: url({% static 'adminstatic/images/preloader.png' %});
+        background-size: 50px 50px;
+        background-repeat: no-repeat; 
+        background-color: #FFF;
+        background-position: center;
+        position: fixed;      
+      }
+      .spinner{
+        color: white;
+        position: absolute;
+        top: 48%;
+        left: 48%;
+      }
+
+      html {
+          scroll-behavior: smooth;
+      }
+
+      .ps-scrollbar-y-rail {
+          background-color: #191919 !important;
+      }
+      .ps-scrollbar-y {
+          width: 6px !important;
+      }
+
+      /* width */
+      ::-webkit-scrollbar {
+          width: 10px;
+
+      }
+      #datetimepicker3 {
+          width: 300px;
+
+      }
+      #datetimepicker4 {
+          width: 300px;
+      }
+
+
+      /* Track */
+      ::-webkit-scrollbar-track {
+          background: #f1f1f1; 
+      }
+
+      ::-webkit-scrollbar-track:hover {
+          background: #f1f1f1;
+      }
+       
+      /* Handle */
+      ::-webkit-scrollbar-thumb {
+          background: #888;
+          border-radius: 10px !important;
+      }
+
+      /* Handle on hover */
+      ::-webkit-scrollbar-thumb:hover {
+          background: #8C8C8C !important; 
+      }
+    </style>
+</head>
+
+<body>
+  {% if messages %}
+  {% for message in messages %}
+  <div class="alert alert-success" role="alert" style="z-index: 10; position: fixed; width: auto; right:20px; top: 80px;">
+      {{message}}
+  </div>
+  {% endfor %}
+  {% endif %} 
+
+  <div class="spinner-wrapper">
+    <div class="spinner"></div>
+  </div>
+  <div class="wrapper">
+      <div class="sidebar" data-color="purple" data-background-color="black">
+          <div class="logo">
+              <div class="container-fluid">
+                  <a href="{% url 'tntapp:adminhome' %}" class="simple-text logo-normal">
+                      <img src="{{orginfo.logo.url}}" style="background-color: #f9f9f9; max-height: 60px; border-radius: 5px;display: block; margin: auto;">
+                      <!-- <span style="font-size: 16px;">{{orginfo.name}}</span> -->
+                  </a>
+              </div>
+          </div>
+
+          <div class="sidebar-wrapper">
+              <div class="user">
+                  <div class="photo">
+                      <img style="background: #d8d8d8;" src="{% static 'adminstatic/images/faces/avatar.svg' %}" />
+                  </div>
+                  <div class="user-info">
+                      <a data-toggle="collapse" href="#collapseExample" class="username">
+                          <span>
+                             {{user.username|title}}
+                            <b class="caret"></b>
+                          </span>
+                      </a>
+                      <div class="collapse" id="collapseExample">
+                          <ul class="nav">
+                            <li class="nav-item {% block profileupdate %}{% endblock %}">
+                              <a class="nav-link" href="{% url 'tntapp:adminorganizationupdate' organization.id %}" >
+                                <span class="sidebar-mini"><i style="padding-top: 0.1rem;font-size: 1.5rem;" class="material-icons">assignment_ind</i></span>
+                                <span class="sidebar-normal"> Update Information </span>
+                              </a>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a class="nav-link bg-danger" href="{% url 'tntapp:logout' %}">
+                                  <span class="sidebar-mini"><i style="padding-top: 0.1rem;font-size: 1.5rem;" class="material-icons">power_settings_new</i></span>
+                                  <span class="sidebar-normal"> Logout </span>
+                                </a>
+                            </li>
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+              <ul class="nav">
+                <li class="nav-item {% block adminhome %}{% endblock %}">
+                  <a class="nav-link" href="{% url 'tntapp:adminorganization' %}">
+                    <span class="sidebar-mini"><i style="padding-top: 0.1rem;font-size: 1.5rem;" class="material-icons">info</i></span>
+                    <span class="sidebar-normal">Dashbord </span>
+                  </a>
+                </li>
+                <li id="{% block servicelistid %}{% endblock %}" class="nav-item {% block servicelist %} {% endblock %} ">
+                  <a class="nav-link" href="{% url 'tntapp:adminservicelist' %}">
+                    <i class="material-icons">supervised_user_circle</i>
+                    <p> Service Management </p>
+                  </a>
+                </li>
+                <li id="{% block pagelistid %}{% endblock %}" class="nav-item {% block pagelist %} {% endblock %} ">
+                  <a class="nav-link" href="{% url 'tntapp:adminpagelist' %}">
+                    <i class="material-icons">pages</i>
+                    <p> Page Management </p>
+                  </a>
+                </li>
+                 <li id="{% block packagecategorylistid %}{% endblock %}" class="nav-item {% block packagecategorylist %} {% endblock %} ">
+                  <a class="nav-link" href="{% url 'tntapp:adminpackagecategorylist' %}">
+                    <i class="material-icons">note</i>
+                    <p> Package-Category  </p>
+                  </a>
+                </li>
+                 <li id="{% block packagefeaturelistid %}{% endblock %}" class="nav-item {% block packagefeaturelist %} {% endblock %} ">
+                  <a class="nav-link" href="{% url 'tntapp:adminpackagefeaturelist' %}">
+                    <i class="material-icons">featured_video</i>
+                    <p> Package-Feature </p>
+                  </a>
+                </li>
+                <li id="{% block locationlistid %}{% endblock %}" class="nav-item {% block locationlist %} {% endblock %} ">
+                  <a class="nav-link" href="{% url 'tntapp:adminlocationlist' %}">
+                    <i class="material-icons">location_on</i>
+                    <p> Location Management</p>
+                  </a>
+                </li>
+                <li id="{% block packagelistid %}{% endblock %}" class="nav-item {% block packagelist %} {% endblock %} ">
+                  <a class="nav-link" href="{% url 'tntapp:adminpackagelist' %}">
+                    <i class="material-icons">library_books</i>
+                    <p> Package Management </p>
+                  </a>
+                </li>
+                <li id="{% block articlelistid %}{% endblock %}" class="nav-item {% block articlelist %} {% endblock %} ">
+                  <a class="nav-link" href="{% url 'tntapp:adminarticlelist' %}">
+                    <i class="material-icons">import_contacts</i>
+                    <p> Article Management </p>
+                  </a>
+                </li>
+                <li id="{% block albumlistid %}{% endblock %}" class="nav-item {% block albumlist %} {% endblock %} ">
+                  <a class="nav-link" href="{% url 'tntapp:adminalbumlist' %}">
+                    <i class="material-icons">album</i>
+                    <p> Album Management </p>
+                  </a>
+                </li>
+                <li id="{% block messagelistid %}{% endblock %}" class="nav-item {% block messagelist %} {% endblock %} ">
+                  <a class="nav-link" href="{% url 'tntapp:adminmessagelist' %}">
+                    <i class="material-icons">message</i>
+                    <p> Message Management </p>
+                  </a>
+                </li>
+                <li id="{% block packageinquerylistid %}{% endblock %}" class="nav-item {% block packageinquerylist %} {% endblock %} ">
+                  <a class="nav-link" href="{% url 'tntapp:adminpackageinquirylist' %}">
+                    <i class="material-icons">mail_outline</i>
+                    <p> Package Inquery </p>
+                  </a>
+                </li>
+                <li id="{% block happycustomerlistid %}{% endblock %}" class="nav-item {% block happycustomerlist %} {% endblock %} ">
+                  <a class="nav-link" href="{% url 'tntapp:adminhappycustomerlist' %}">
+                    <i class="material-icons">face</i>
+                    <p> Happy Customer </p>
+                  </a>
+                </li>
+                <li id="{% block sliderlistid %}{% endblock %}" class="nav-item {% block sliderlist %} {% endblock %} ">
+                  <a class="nav-link" href="{% url 'tntapp:adminsliderlist' %}">
+                    <i class="material-icons">slideshow</i>
+                    <p>Slider Management </p>
+                  </a>
+                </li>
+                <li id="{% block faqlistid %}{% endblock %}" class="nav-item {% block faqlist %} {% endblock %} ">
+                  <a class="nav-link" href="{% url 'tntapp:adminfaqlist' %}">
+                    <i class="material-icons">question_answer</i>
+                    <p>Faqs Management </p>
+                  </a>
+                </li>
+                <li id="{% block subscribelistid %}{% endblock %}" class="nav-item {% block subscribelist %} {% endblock %} ">
+                  <a class="nav-link" href="{% url 'tntapp:adminsubscribelist' %}">
+                    <i class="material-icons">subscriptions</i>
+                    <p>Subscribe Management </p>
+                  </a>
+                </li>
+                
+               
+                <li class="nav-item">
+                  <a class="nav-link bg-danger" href="{% url 'tntapp:logout' %}">
+                    <i class="large material-icons">power_settings_new</i>
+                    <p> Logout </p>
+                  </a>
+                </li>
+              </ul>
+              <hr color="white">
+              <ul class="h6 p-2 text-center text-muted">
+                  <p style="font-size: 16px;">Marigold Dashboard </p>
+                  <a style="color: #F98B06;" href="https://www.sarobartech.com">&copy; <script>
+              document.write(new Date().getFullYear())
+            </script> Sarobar Technology</a>
+              </ul>
+          </div>
+      </div>
+
+
+      <div class="main-panel">
+          <!-- Navbar -->
+          <nav class="navbar navbar-expand-lg navbar-transparent  navbar-absolute fixed-top">
+            <div class="container-fluid">
+                  <div class="navbar-wrapper">
+                      <div class="navbar-minimize">
+                          <button id="minimizeSidebar" class="btn btn-just-icon btn-white btn-fab btn-round">
+                              <i class="material-icons text_align-center visible-on-sidebar-regular">more_vert</i>
+                              <i class="material-icons design_bullet-list-67 visible-on-sidebar-mini">view_list</i>
+                          </button>
+                      </div>
+                      <div style="margin-left: 10px;">
+                          <a class="navbar-brand" style="font-size: 26px;">
+                              {{orginfo.name}}
+                          </a>
+                      </div>
+                  </div>
+                  <a class="btn btn-danger" href="{% url 'tntapp:logout' %}">Visit Site</a>
+
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="sr-only">Toggle navigation</span>
+                <span class="navbar-toggler-icon icon-bar"></span>
+                <span class="navbar-toggler-icon icon-bar"></span>
+                <span class="navbar-toggler-icon icon-bar"></span>
+              </button>
+            </div>
+          </nav>
+          <!-- End Navbar -->
+
+
+          <div class="content px-0">
+             <!--  <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-md-12"> -->
+
+                          {% block content %}
+
+
+                          {% endblock %}
+                          <div class="modal fade" id="main-modal" tabindex="-1" role="dialog">
+                              <div class="modal-dialog" role="document">
+                                  <div class="modal-content">                
+                                  </div>
+                              </div>
+                          </div>
+                      <!-- </div>
+                  </div>
+              </div> -->
+          </div>
+
+          <footer class="footer bg-light py-2">
+            <div class="container-fluid">
+              <nav class="float-left">
+                <ul>
+                  <li>
+                    <a href="https://www.sarobartech.com/">
+                      Sarobar Technology
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://www.sarobartech.com/about/">
+                      About Us
+                    </a>
+                  </li>
+                  <!-- <li>
+                    <a href="https://www.sarobartech.com/blogs/">
+                      Blog
+                    </a>
+                  </li> -->
+                </ul>
+              </nav>
+              <div class="copyright float-right">
+                &copy;
+                <script>
+                  document.write(new Date().getFullYear())
+                </script>, <!-- made with <i class="material-icons">favorite</i> by -->
+                <a href="https://www.sarobartech.com/" target="_blank">Sarobar Technology</a>
+              </div>
+            </div>
+          </footer>
+      </div>
+  </div>
+
+
+  <!--   Core JS Files   -->
+  <script src="{% static 'adminstatic/js/core/jquery.min.js' %}"></script>
+  <script src="{% static 'adminstatic/js/core/popper.min.js' %}"></script>
+
+
+  <script src="{% static 'adminstatic/js/bootstrap-marigold-design.js' %}"></script>
+
+
+  <script src="{% static 'adminstatic/js/plugins/perfect-scrollbar.jquery.min.js' %}"></script>
+
+  <script src="{% static 'adminstatic/js/plugins/moment.min.js' %}"></script>
+
+  <script src="{% static 'adminstatic/js/plugins/bootstrap-datetimepicker.min.js' %}"></script>
+
+  <script src="{% static 'adminstatic/js/plugins/nouislider.min.js' %}"></script>
+
+
+
+  <script src="{% static 'adminstatic/js/plugins/bootstrap-selectpicker.js' %}"></script>
+
+  <script src="{% static 'adminstatic/js/plugins/bootstrap-tagsinput.js' %}"></script>
+
+  <script src="{% static 'adminstatic/js/plugins/jasny-bootstrap.min.js' %}"></script>
+
+  <script src="{% static 'adminstatic/js/modernizr.js' %}"></script>
+
+
+  <script src="{% static 'adminstatic/js/marigold-dashboard.js' %}"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+
+  <script src="{% static 'adminstatic/js/plugins/arrive.min.js' %}" type="text/javascript"></script>
+
+  <script src="{% static 'adminstatic/js/plugins/jquery.validate.min.js' %}"></script>
+
+
+
+  <!--  Charts Plugin, full documentation here: https://gionkunz.github.io/chartist-js/ -->
+  <script src="{% static 'adminstatic/js/plugins/chartist.min.js' %}"></script>
+
+  <!--  Plugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard -->
+  <script src="{% static 'adminstatic/js/plugins/jquery.bootstrap-wizard.js' %}"></script>
+
+  <!--  Notifications Plugin, full documentation here: http://bootstrap-notify.remabledesigns.com/    -->
+  <script src="{% static 'adminstatic/js/plugins/bootstrap-notify.js' %}"></script>
+
+
+  <!-- Sliders Plugin, full documentation here: https://refreshless.com/nouislider/ -->
+  <script src="{% static 'adminstatic/js/plugins/nouislider.min.js' %}"></script>
+
+  <!--  Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
+  <!-- <script src="{% static 'adminstatic/js/plugins/jquery.select-bootstrap.js' %}"></script> -->
+
+  <!--  DataTables.net Plugin, full documentation here: https://datatables.net/    -->
+
+  <!-- Sweet Alert 2 plugin, full documentation here: https://limonte.github.io/sweetalert2/ -->
+  <script src="{% static 'adminstatic/js/plugins/sweetalert2.js' %}"></script>
+
+  <!-- Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
+  <script src="{% static 'adminstatic/js/plugins/jasny-bootstrap.min.js' %}"></script>
+
+  <!--  Full Calendar Plugin, full documentation here: https://github.com/fullcalendar/fullcalendar    -->
+  <script src="{% static 'adminstatic/js/plugins/fullcalendar.min.js' %}"></script>
+
+  <script src="{% static 'adminstatic/js/select2.min.js' %}"></script>
+
+
+  <script>
+    $(".select2").select2();
+  </script>
+  <script type="text/javascript">
+    $('#main-modal').on('show.bs.modal', function (e) {
+      var button = $(e.relatedTarget);
+      var modal = $(this);
+      modal.find('.modal-content').load(button.data("remote"));
+    });
+    $('#main-modal').on('hidden.bs.modal', function (e) {
+      var button = $(e.relatedTarget);
+      var modal = $(this);
+      modal.find('.modal-content').empty();
+    });
+  </script>
+
+  <script type="text/javascript">
+
+  $(document).ready(function(){
+    jQuery('#active')[0].scrollIntoView();
+
+    //init DateTimePickers
+    md.initFormExtendedDatetimepickers();
+     $('.timepickeronly').datetimepicker({
+          format: 'HH:mm A'
+      });     
+  });
+
+  </script>
+
+ <!--  <script>
+  jQuery(document).ready(function() {
+      jQuery('#active')[0].scrollIntoView();
+  });
+  </script> -->
+  <script type="text/javascript">
+    window.setTimeout(function() {
+      $(".alert").fadeTo(500, 0).slideUp(500, function(){
+          $(this).remove(); 
+      });
+    }, 1500);
+
+    //Preloader
+    $(window).on("load", function() {
+      preloaderFadeOutTime = 1000;
+      hidePreloader();
+      function hidePreloader() {
+        var preloader = $('.spinner-wrapper');
+        preloader.fadeOut(preloaderFadeOutTime);
+      }
+    });
+  </script>
+
+  {% block js %}
+
+  {% endblock %}
+
+  <script type="text/javascript">
+    $('form').submit(function(){
+      $(':submit').text("Please Wait...").attr('disabled', true);
+      return true;
+    });
+  </script>
+  
+</body>
+</html>

@@ -1,0 +1,142 @@
+ {% extends 'clienttemplates/clientbase.html' %}
+ {% load static %}
+
+{% block title %}Contact us{% endblock %}
+
+ {% block content %}
+
+<!-- breadcrumb area start -->
+<div class="breadcrumb-area jarallax" style="background-image:url({% static 'clientstatic/img/bg/1.png' %});">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-inner">
+                    <h1 class="page-title">Contact Us</h1>
+                    <ul class="page-list">
+                        <li><a href="{% url 'tntapp:clienthome' %}">Home</a></li>
+                        <li>Contact Us</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- breadcrumb area End -->
+
+<!-- contact area End -->
+<div class="contact-area pd-top-108">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="section-title text-lg-center text-left">
+                    <h2 class="title">Get In Touch!</h2>
+                    <p>If you have any queries regarding our services and packages, send us a message. </p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-5 offset-xl-1 col-lg-6">
+                <div class="thumb">
+                    <img src="{% static 'clientstatic/img/others/11.png' %}" alt="img">
+                </div>
+            </div>
+            <div class="col-xl-5 col-lg-6">
+                <form class="tp-form-wrap" method="POST">
+                    {% csrf_token %}
+                    <div style="text-danger">{{ form.non_field_errors }}</div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="single-input-wrap style-two">
+                                <span class="single-input-title">Name</span>
+                                {{form.name}}
+                            </label>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="single-input-wrap style-two">
+                                <span class="single-input-title">Number</span>
+                                {{form.mobile}}
+                            </label>
+                        </div>
+                        <div class="col-lg-12">
+                            <label class="single-input-wrap style-two">
+                                <span class="single-input-title">Email</span>
+                                {{form.email}}
+                            </label>
+                        </div>
+                        <div class="col-lg-12">
+                            <label class="single-input-wrap style-two">
+                                <span class="single-input-title">Message</span>
+                                {{form.message}}
+                            </label>
+                        </div>
+                        {{form.gc}}
+                        <div class="col-12">
+                            <!-- <a class="btn btn-yellow" href="#">Send Message</a> -->
+                            <button class="btn btn-yellow">Send Message</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- contact area End -->
+
+<!-- contact info area End -->
+<div class="contact-info-area pd-top-120">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-7 col-lg-8 order-lg-12">
+                <div id="map" style="width: 100%; height: 400px;"></div>
+            </div>
+            <div class="col-xl-3 col-lg-4 order-lg-1">
+                <div class="contact-info bg-gray">
+                    <p>
+                        <i class="fa fa-map-marker"></i> 
+                        <span>{{organization.address}}</span>
+                    </p>
+                    <p>
+                        <i class="fa fa-clock-o"></i> 
+                        <span>{{organization.office_time}}</span>
+                    </p>
+                    <p>
+                        <i class="fa fa-envelope"></i> 
+                        <span>Email: <span>{{organization.email}}</span></span>
+                    </p>
+                    <p>
+                        <i class="fa fa-phone"></i> 
+                        <span>
+                            Contact-Number: <span>{{organization.contact_no}}</span> <br>
+                            Alternative-Number: <span>{{organization.alt_contact_no}}</span>
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- contact info area End -->
+
+    
+{% endblock %}
+
+{% block js %}
+<script src="https://www.google.com/recaptcha/api.js?render=6LfxnOsUAAAAAM9YyNeYRSdxeKPep9Cq7pMu1HxR"></script>
+<script>
+    grecaptcha.ready(function() {
+        grecaptcha.execute('6LfxnOsUAAAAAM9YyNeYRSdxeKPep9Cq7pMu1HxR', {action: 'homepage'}).then(function(token) {
+            document.getElementById("id_gc").value = token
+        });
+    });
+</script>
+<script>
+    function myMap() {
+        var mapProp= {
+            center:new google.maps.LatLng({{organization.map_location}}),
+            zoom:17,
+        };
+        var map = new google.maps.Map(document.getElementById("map"),mapProp);
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvixCoSBkZLgW_yDL1MnLZfmGkE6SjEBk&callback=myMap" async defer></script>
+{% endblock %}

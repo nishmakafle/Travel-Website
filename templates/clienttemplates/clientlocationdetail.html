@@ -1,0 +1,134 @@
+{% extends 'clienttemplates/clientbase.html' %}
+{% load static %}
+{% block title %}Destination {{location}}{% endblock %}
+
+
+{% block content %}
+<div class="breadcrumb-area jarallax" style="background-image:url({% static 'clientstatic/img/bg/1.png' %});">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-inner">
+                    <h1 class="page-title">Packages in {{location}}</h1>
+                    <ul class="page-list">
+                        <li><a href="{% url 'tntapp:clienthome' %}">Home</a></li>
+                        <li>Packages in {{location}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="tour-list-area pd-top-120">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-9 col-lg-8 order-lg-12">
+                <div class="tp-tour-list-search-area">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>All Packages having <span class="text-info font-weight-bold">{{location.name}}</span> as destination</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="tour-list-area">
+                    {% for package in page_obj %}
+                    <div class="single-destinations-list style-three">
+                        <div class="thumb">
+                            <img src="{{package.image.url}}" alt="list">
+                        </div>
+                        <div class="details">
+                            <p class="location"><img src="{% static 'clientstatic/img/icons/1.png' %}" alt="map">{{package.destination}}</p>
+                            <h4 class="title"><a href="{% url 'tntapp:clienttourdetail' package.id %}">{{package.title}}</a></h4>
+                            <p class="content">{{package.description|striptags|truncatewords:50|safe}}</p>
+                            <div class="list-price-meta">
+                                <ul class="tp-list-meta d-inline-block">
+                                    {{package.duration}}
+                                </ul>
+                                <div class="tp-price-meta d-inline-block">
+                                    <p>Price</p>
+                                    <h2>Rs. {{package.price}} </h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="text-md-center text-left">
+                        <div class="tp-pagination text-md-center text-left d-inline-block mt-4">
+                            <ul class="page--list">
+                            {% if page_obj.has_previous %}
+                                <li><a class="prev page-numbers" href="?page={{ page_obj.previous_page_number }}"><i class="la la-long-arrow-left"></i></a></li>
+                            {% else %}
+                                <li class="disabled">
+                                <span class="page-numbers"><i class="la la-long-arrow-left"></i></span>
+                                </li>
+                            {% endif %}
+                            {% for i in paginator.page_range %}
+                                {% if page_obj.number == i %}
+                                <li><span class="page-numbers current">{{ i }} <span class="sr-only">(current)</span></span></li>
+                                {% else %}
+                                <li><a href="?page={{ i }}" class="page-numbers">{{ i }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                            {% if page_obj.has_next %}
+                                <li><a class="next page-numbers" href="?page={{ page_obj.next_page_number }}"><i class="la la-long-arrow-right"></i></a></li>
+                            {% else %}
+                                <li class="disabled"><span class="page-numbers"><i class="la la-long-arrow-right"></i></li>
+                            {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 order-lg-1">
+                <div class="sidebar-area">
+                    <div class="widget tour-list-widget">
+                        <div class="widget-tour-list-search">
+                            <form class="search-form" action="{% url 'tntapp:clientsearch' %}">
+                                <div class="form-group">
+                                    <input type="text" placeholder="Search" name="q">
+                                </div>
+                                <button class="submit-btn" type="submit"><i class="ti-search"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="widget widget_categories">
+                        <h5 class="p-3">Browse our packages</h5>
+                        <ul>
+                            {% for pc in packagecategorylist %}
+                            <li><a href="{% url 'tntapp:packagecategorydetail' pc.title pc.id %}">{{pc.title}}</a> {{pc.package_set.count}}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="widget widget_categories">
+                        <h5 class="p-3">Packages by Destination</h5>
+                        <ul>
+                            {% for location in destinationlist %}
+                            <li><a href="{% url 'tntapp:clientlocationdetail' location.slug %}">{{location.name}}</a> {{location.package_set.count}}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="widget widget-recent-post">
+                        <h2 class="widget-title">Recent Post</h2>
+                        <ul>
+                            {% for blog in recentblogs %} 
+                            <li>
+                                <div class="media">
+                                    <img src="{{blog.image.url}}" alt="widget" style="width: 30%;">
+                                    <div class="media-body">
+                                        <span class="post-date">{{blog.created_at|date}}</span>
+                                        <h6 class="title"><a href="{% url 'tntapp:clientblogdetail' blog.id %}">{{blog.title}}</a></h6>
+                                    </div>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="widget_ads">
+                        <a href="#"><img src="assets/img/others/01.png" alt="img"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

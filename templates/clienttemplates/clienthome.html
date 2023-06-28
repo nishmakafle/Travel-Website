@@ -1,0 +1,506 @@
+{% extends 'clienttemplates/clientbase.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+    <!-- banner area start -->
+    <div class="banner-area">
+        <div class="banner-slider">
+            {% for slider in sliders %}
+            <div class="banner-slider-item banner-bg-{{forloop.counter}}" style="background-image: url({{slider.image.url}});">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-8 col-lg-9 offset-xl-2 offset-lg-1">
+                            <div class="row">
+                                <div class="col-lg-9 col-sm-8">
+                                    <div class="banner-inner">
+                                        <p class="banner-cat s-animate-1">{{slider.title}}</p>
+                                        <h2 class="banner-title s-animate-2">{{slider.title}}</h2>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-sm-4">
+                                    <div class="video-popup-btn s-animate-video">
+                                        <a href="{{organization.profile_video}}" class="video-play-btn mfp-iframe"><i class="fa fa-play"></i></a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 banner-tour-package">
+                                    <div class="row">
+                                        <div class="col-sm-4 s-animate-3">
+                                            <div class="tp-price-meta">
+                                                <p>We have</p>
+                                                <h2>100+ </h2>
+                                                <p class="tp-price-meta-details">packages Available</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 s-animate-4">
+                                            <div class="tp-price-meta">
+                                                <p>Best</p>
+                                                <h2>Destinations</h2>
+                                                <p class="tp-price-meta-details">best hotels</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 s-animate-5">
+                                            <div class="tp-price-meta">
+                                                <p>Entertainment</p>
+                                                <h2>Overloaded</h2>
+                                                <p class="tp-price-meta-details" ><a href="{% url 'tntapp:clienttourlist' %}"> Browse packages</a></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="banner-social-meta">
+            <div class="banner-slider-dots"></div>
+            <ul class="social-icon">
+                {% if organization.facebook %}
+                <li>
+                    <a class="facebook" href="{{organization.facebook}}" target="_blank"><i class="fa fa-facebook"></i></a>
+                </li>
+                {% endif %}
+                {% if organization.twitter %}
+                <li>
+                    <a class="twitter" href="{{organization.twitter}}" target="_blank"><i class="fa fa-twitter"></i></a>
+                </li>
+                {% endif %}
+                {% if organization.instagram %}
+                <li>
+                    <a class="instagram" href="{{organization.instagram}}" target="_blank"><i class="fa fa-instagram"></i></a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="container">
+            <div class="banner-slider-controls">
+                <div class="slider-nav tp-control-nav"></div>
+                <!--slider-nav-->
+                <div class="tp-slider-extra slider-extra">
+                    <div class="text">
+                        <span class="first">01</span>
+                        <span class="devider">/</span>
+                        <span class="last"></span>
+                    </div>
+                </div>
+                <!--slider-extra-->
+            </div>
+        </div>
+    </div>
+    <!-- banner area end -->
+
+    <!-- search area start -->
+    <div class="search-area tp-main-search-area">
+        <div class="container">
+            <div class="tp-main-search">
+                <form method="GET" action="/search/">
+                     <div class="row">
+                    
+                        <div class="col-lg-3 col-md-4">
+                            <div class="tp-search-single-wrap">
+                                <input class="w-100" type="text" placeholder="Enter a word" name="q">
+                                <i class="ti-location-pin"></i>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4">
+                            <div class="tp-search-single-wrap">
+                                <input class="w-100" type="text" placeholder="Where From?" name = "destination" value="{{request.GET.destination}}">
+                                <i class="fa fa-dot-circle-o"></i>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 order-lg-9">
+                            <div class="tp-search-single-wrap float-left w-100">
+                                <select class="select w-100" name="category">
+                                    <option value="">Select Activity</option>
+                                    {% for packagecategory in packagecategorylist %}
+                                    <option value="{{packagecategory.title}}">{{packagecategory.title}}</option>
+                                    {% endfor %}
+                                </select>
+                                <i class="fa fa-plus-circle"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-3 col-md-4 order-12">
+                            <button class="btn btn-yellow"><i class="ti-search"></i> Search</button>
+                        </div>
+                    
+                     </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- search area end -->
+
+    <!-- intro area start -->
+    <!-- <div class="intro-area pd-top-112">
+        <div class="container">
+            <div class="row">
+                {% for activity in packagecategorylist %}
+                <div class="col-md-4" style="cursor: pointer;" onclick="location.href = '{% url "tntapp:packagecategorydetail" activity.title activity.id %}'">
+                    <div class="single-intro wow animated fadeInUp" data-wow-duration="0.6s" data-wow-delay="0.1s">
+                        <h4 class="intro-title">
+                            <img src="{{activity.image.url}}" style="width: 250px; border: 2px solid antiquewhite; border-radius: 10%;" alt="">
+                            <a class="intro-cat" href="{% url 'tntapp:packagecategorydetail' activity.title activity.id %}">{{activity.title}}</a>
+                        </h4>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div> -->
+    <div class="intro-area pd-top-112">
+        <div class="container">
+            <div class="section-title text-lg-center text-left">
+                <h2 class="title">{{organization.name}}</h2>
+                <p>{{organization.slogan}}</p>
+            </div>
+            <div class="row">
+                {% for pc in packagecategorylist %}
+                <div class="col-lg-3 col-md-6" onclick="location.href='{% url 'tntapp:packagecategorydetail' pc.title pc.id %}'" style="cursor: pointer;">
+                    <div class="single-intro style-two">
+                        <div class="thumb">
+                            <img src="{{pc.image.url}}" alt="img" class="img-fluid" style="height: 150px; width: 100%; object-fit: cover;">
+                        </div>
+                        <h4 class="intro-title">{{pc.title}}</h4>
+                        <p>{{pc.description|truncatewords:25|striptags|safe}}</p>
+                    </div>
+                </div>
+                {% endfor %}
+           
+            </div>
+        </div>
+    </div>
+    <!-- intro area end -->
+
+    <!-- offer area start -->
+    <div class="offer-area pd-top-70">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-6 col-lg-8">
+                    <div class="section-title text-center">
+                        <h2 class="title">Our Featured Packages</h2>
+                        <p>Here are our featured packages. Make you holiday better now. ,</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="destinations-list-slider-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-9 col-lg-10 offset-xl-1 order-lg-12">
+                        <div class="destinations-list-slider">
+                            {% for package in featured_packages %}
+                            <div class="d-list-slider-item">
+                                <div class="single-destinations-list text-center">
+                                    <div class="thumb">
+                                        <span class="d-list-tag">Featured</span>
+                                        <img src="{{package.image.url}}" style="height: 180px; object-fit: cover;" alt="list">
+                                        <div class="d-list-btn-wrap">
+                                            <div class="d-list-btn">
+                                                <a class="btn btn-yellow" href="{% url 'tntapp:clienttourdetail' package.id %}">Inquiry Now <i class="fa fa-paper-plane"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="details">
+                                        <h4 class="title">{{package.title}}</h4>
+                                        <p class="content">{{package.destination}}</p>
+                                        <ul class="tp-list-meta border-bt-dot">
+                                            <li><i class="fa fa-calendar-o"></i> 8oct</li>
+                                            <li><i class="fa fa-clock-o"></i>{{package.duration}}</li>
+                                            <li><i class="fa fa-star"></i> 4.3</li>
+                                        </ul>
+                                        <div class="tp-price-meta tp-price-meta-cl">
+                                            <p>Price</p>
+                                            <small> Rs </small>
+                                            <h2>{{package.price}} </h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            <!-- <div class="d-list-slider-item">
+                                <div class="single-destinations-list text-center">
+                                    <div class="thumb">
+                                        <img src="{% static 'clientstatic/img/destination-list/2.png' %}" alt="list">
+                                        <div class="d-list-btn-wrap">
+                                            <div class="d-list-btn">
+                                                <a class="btn btn-yellow" href="#">Book Now <i class="fa fa-paper-plane"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="details">
+                                        <h4 class="title">Italy</h4>
+                                        <p class="content">Atmosphere of the sunny country</p>
+                                        <ul class="tp-list-meta border-bt-dot">
+                                            <li><i class="fa fa-calendar-o"></i> 8oct</li>
+                                            <li><i class="fa fa-clock-o"></i> 4 days</li>
+                                            <li><i class="fa fa-star"></i> 4.3</li>
+                                        </ul>
+                                        <div class="tp-price-meta tp-price-meta-cl">
+                                            <p>Price</p>
+                                            <h2>620 <small>$</small></h2>
+                                            <del>620<span>$</span></del>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-list-slider-item">
+                                <div class="single-destinations-list text-center">
+                                    <div class="thumb">
+                                        <span class="d-list-tag">Special Offer</span>
+                                        <img src="{% static 'clientstatic/img/destination-list/3.png' %}" alt="list">
+                                        <div class="d-list-btn-wrap">
+                                            <div class="d-list-btn">
+                                                <a class="btn btn-yellow" href="#">Book Now <i class="fa fa-paper-plane"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="details">
+                                        <h4 class="title">Canada</h4>
+                                        <p class="content">Atmosphere of the sunny country</p>
+                                        <ul class="tp-list-meta border-bt-dot">
+                                            <li><i class="fa fa-calendar-o"></i> 8oct</li>
+                                            <li><i class="fa fa-clock-o"></i> 4 days</li>
+                                            <li><i class="fa fa-star"></i> 4.3</li>
+                                        </ul>
+                                        <div class="tp-price-meta tp-price-meta-cl">
+                                            <p>Price</p>
+                                            <h2>620 <small>$</small></h2>
+                                            <del>620<span>$</span></del>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-list-slider-item">
+                                <div class="single-destinations-list text-center">
+                                    <div class="thumb">
+                                        <span class="d-list-tag">Special Offer</span>
+                                        <img src="{% static 'clientstatic/img/destination-list/1.png' %}" alt="list">
+                                        <div class="d-list-btn-wrap">
+                                            <div class="d-list-btn">
+                                                <a class="btn btn-yellow" href="#">Book Now <i class="fa fa-paper-plane"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="details">
+                                        <h4 class="title">Greece</h4>
+                                        <p class="content">Atmosphere of the sunny country</p>
+                                        <ul class="tp-list-meta border-bt-dot">
+                                            <li><i class="fa fa-calendar-o"></i> 8oct</li>
+                                            <li><i class="fa fa-clock-o"></i> 4 days</li>
+                                            <li><i class="fa fa-star"></i> 4.3</li>
+                                        </ul>
+                                        <div class="tp-price-meta tp-price-meta-cl">
+                                            <p>Price</p>
+                                            <h2>620 <small>$</small></h2>
+                                            <del>620<span>$</span></del>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="col-lg-2 align-self-center order-lg-11">
+                        <div class="container">
+                            <div class="destinations-slider-controls">
+                                <div class="slider-nav tp-control-nav"></div>
+                                <!--slider-nav-->
+                                <div class="tp-slider-extra slider-extra">
+                                    <div class="text">
+                                        <span class="first">01 </span>
+                                        <span class="last"></span>
+                                    </div>
+                                    <!--text-->
+                                    <div class="d-list-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                                        <span class="slider__label sr-only"></span>
+                                    </div>
+                                </div>
+                                <!--slider-extra-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- offer area end -->
+
+    <!-- video area start -->
+    <div class="video-area tp-video-area pd-top-110" style="background-image: url({% static 'clientstatic/img/bg/7.png' %});">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-5 col-lg-6 align-self-center wow animated fadeInRight" data-wow-duration="1s" data-wow-delay="0.3s">
+                    <div class="section-title mb-lg-0 mb-4 text-center text-lg-left">
+                        <h2 class="title">Know About US</h2>
+                        {{organization.about_us|truncatewords:55|striptags|safe}}
+                        <a class="btn btn-yellow" href="{% url 'tntapp:clientpagedetail' 'company-profile' %}"><span>Read More<i class="la la-arrow-right"></i></span></a>
+                    </div>
+                </div>
+                <div class="col-xl-5 col-lg-6 offset-xl-1 wow animated fadeInLeft" data-wow-duration="1s" data-wow-delay="0.3s">
+                    <div class="video-popup-wrap">
+                        <div class="thumb">
+                            <img src="{% static 'clientstatic/img/rara-lake.jpeg' %}" alt="video">
+                        </div>
+                        <div class="video-popup-btn">
+                            <a href="{{organization.profile_video}}" class="video-play-btn mfp-iframe"><i class="fa fa-play"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- video area end -->
+    
+    <!-- holiday plan area start -->
+    <div class="holiday-plan-area tp-holiday-plan-area mg-top-96" style="background-image: url({% static 'clientstatic/img/bg/8.png' %});">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-6 col-lg-9">
+                    <div class="section-title text-center">
+                        <h2 class="title wow animated fadeInUp" data-wow-duration="0.6s" data-wow-delay="0.1s">Recently Added Plans</h2>
+                        <p class="wow animated fadeInUp" data-wow-duration="0.6s" data-wow-delay="0.2s">Here are our recently added plan. You can place an inquiry by clicking the link below. </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                {% for package in recentpackages %}
+                <div class="col-lg-3 col-sm-6" onclick="location.href='{% url 'tntapp:clienttourdetail' package.id  %}'" style="cursor: pointer;">
+                    <div class="single-destinations-list style-two wow animated fadeInUp" data-wow-duration="0.4s" data-wow-delay="0.1s">
+                        <div class="thumb">
+                            <img src="{{package.image.url}}" alt="list" style="height: 180px; object-fit: cover;">
+                        </div>
+                        <div class="details">
+                            <p class="location"><img src="{% static 'clientstatic/img/icons/1.png' %}" alt="map">{{package.destination}}</p>
+                            <h4 class="title">{{package.title}}</h4>
+                            <p class="content">{{package.duration}}</p>
+                            <div class="tp-price-meta">
+                                <h2>Rs. {{package.price}}/- </h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- holiday plan area end -->
+
+    <!-- client review area start -->
+    <div class="client-review-area client-review-area-home pd-top-70">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 align-self-center">
+                    <div class="thumb wow animated fadeInRight" data-wow-duration="1s" data-wow-delay="0.3s">
+                        <div class="client-review-thumb">
+                            <img src="{% static 'clientstatic/img/others/client-review.png' %}" alt="review">
+                        </div>
+                    </div>
+                </div>
+                {% for hc in happycustomers %}
+                <div class="col-lg-6">
+                    <div class="single-client-review wow animated fadeInLeft" data-wow-duration="1s" data-wow-delay="0.3s">
+                        <p class="sub-title">Travel Reviews</p>
+                        <h3 class="location-name">{{Russia}}</h3>
+                        <div class="tp-review-meta">
+                            {% for star in hc.starss %}
+                            <i class="ic-yellow fa fa-star"></i>
+                            {% endfor %}
+                            {% for star in hc.nstarss %}
+                            <i class="fa fa-star"></i>
+                            {% endfor %}
+                            <span>on {{hc.created_at}}</span>
+                        </div>
+                        <p>{{hc.quote|safe}}</p>
+                        <div class="media">
+                            <div class="media-left">
+                                <img src="{{hc.image.url}}" alt="client">
+                            </div>
+                            <div class="media-body">
+                                <h6>{{hc.name}}</h6>
+                                <p>{{hc.current_engagement}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- client review area End -->
+    
+    <!-- blog area start -->
+    <div class="blog-area pd-top-120">
+        <div class="container">
+            <div class="row">
+                {% for blog in recentblogs %}
+                {% if forloop.counter == 1 %}
+                <div class="col-lg-6">
+                    <div class="single-blog single-blog-wrap style-two">
+                        <div class="thumb single-blog-left-wrap">
+                            <img src="{{blog.image.url}}" alt="blog" style="height: 530px;">
+                        </div>
+                        <div class="single-blog-details single-blog-right-wrap">
+                            {% if blog.location %}
+                            <a class="tag" href="#">{{blog.location}}</a>
+                            {% endif %}
+                            <p class="date">{{blog.created_at}}</p>
+                            <h4 class="title">{{blog.title}}</h4>
+                            <p class="content">{{blog.content|truncatewords:50|striptags|safe}}</p>
+                            <a class="btn btn-yellow" href="{% url 'tntapp:clientblogdetail' blog.id %}"><span>Read More<i class="la la-arrow-right"></i></span></a>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+                <div class="col-lg-6">
+                    <div class="row">
+                        {% for blog in recentblogs %}
+                        {% if forloop.counter != 1 %}
+                        <div class="col-sm-6">
+                            <div class="single-blog style-three">
+                                <div class="thumb">
+                                    <img src="{{blog.image.url}}" alt="blog" style="height: 250px;">
+                                </div>
+                                <div class="single-blog-details-wrap">
+                                    <div class="single-blog-details text-center">
+                                        {% if blog.location %}
+                                        <a class="tag" href="#">{{blog.location}}</a>
+                                        {% endif %}
+                                        <p class="date">{{blog.created_at}}</p>
+                                        <h4 class="title">{{blog.title}}</h4>
+                                        <a class="btn btn-yellow" href="{% url 'tntapp:clientblogdetail' blog.id %}"><span>Read Now<i class="la la-arrow-right"></i></span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- blog area End -->
+    
+    <!-- ads area start -->
+    <div class="ads-area pd-top-90">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-8 col-lg-9">
+                    <a class="ads-thumb" href="#">
+                        <img src="{% static 'clientstatic/img/others/1.png' %}" alt="ads">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ads area End -->
+
+ 
+    
+    {% endblock %}

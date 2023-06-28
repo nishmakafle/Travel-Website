@@ -1,0 +1,200 @@
+{% extends 'clienttemplates/clientbase.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %} {{package.title}}{% endblock %}
+
+{% block content %}
+
+    <!-- breadcrumb area start -->
+    <div class="breadcrumb-area style-two jarallax" style="background-image:url({% static 'clientstatic/img/bg/1.png' %});">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-inner">
+                        <h1 class="page-title">Tour Details</h1>
+                        <ul class="page-list">
+                            <li><a href="{% url 'tntapp:clienthome'  %}">Home</a></li>
+                            <li><a href="{% url 'tntapp:packagecategorydetail' package.category.title package.category.id  %}">{{package.category}}</a></li>
+                            <li>Tour Details</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb area End -->
+    
+    <!-- tour details area End -->
+    <div class="tour-details-area mg-top--70">
+        <div class="tour-details-gallery">
+            <div class="container-bg bg-dark-blue">
+                <div class="container">
+                    <div class="gallery-filter-area row">
+                        <div class="gallery-sizer col-1"></div>
+                        <!-- gallery-item -->
+                        <div class="tp-gallery-item col-md-5 col-sm-6 mb-10">
+                            <div class="tp-gallery-item-img">
+                                <div class="thumbnails">
+                                    <img src="https://img.youtube.com/vi/{% if package.video %}{{package.vthumb}}{% else %}{{organization.vthumb}}{% endif %}/hqdefault.jpg" alt="image" style="height: 310px;">
+                                    <div class="video-popup-btn">
+                                        <a href="{% if package.video %}{{package.video}}{% else %}{{organization.profile_video}}{% endif %}" class="video-play-btn mfp-iframe" tabindex="0"><i class="fa fa-play"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- gallery-item -->
+                        <div class="tp-gallery-item col-md-3 col-sm-6">
+                            <div class="tp-gallery-item-img">
+                                <a href="{{package.image.url}}" data-effect="mfp-zoom-in">
+                                    <img src="{{package.image.url}}" alt="image" style="height: 310px;">
+                                </a>
+                            </div>
+                        </div>
+                        <!-- gallery-item -->
+                        {% for im in package.packageimage_set.all|slice:"4" %}
+                        <div class="tp-gallery-item col-lg-2 col-md-4 col-sm-6">
+                            <div class="tp-gallery-item-img">
+                                <a href="{{im.image.url}}" data-effect="mfp-zoom-in">
+                                    <img src="{{im.image.url}}" alt="image" style="height: 140px; object-fit: cover;">
+                                </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                       
+                        
+                        
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-3 col-lg-4">
+                            <div class="details">
+                                <p class="location mb-0"><i class="fa fa-map-marker"></i>{{package.destination}}</p>
+                                <h4 class="title">{{package.title}}</h4>
+                                <p class="content">{{package.duration}}</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-9 col-lg-8">
+                            <div class="book-list-warp">
+                                <p class="book-list-content">When something good happens, travel to celebrate, When something bad happens, travel to forget, When nothing happens, travel to make it happen. </p>
+                                <div class="tp-price-meta">
+                                    <p>Price</p>
+                                    <h2>Rs. {{package.price|intcomma}}/- </h2>
+                                </div>
+                            </div>
+                            <ul class="tp-list-meta border-tp-solid">
+                                <li class="ml-0"><i class="fa fa-map-marker"></i>{% for location in package.locations.all %}{% if forloop.counter != 1 %} | {% endif %}{{location.name}} {% endfor %}</li>
+                                <li><i class="fa fa-clock-o"></i> {{package.duration}}</li>
+                                <li><i class="fa fa-rupee"></i>Rs. {{package.price}}/-</li>
+                                <li><i class="fa fa-star"></i> {% if package.is_featured %}Featured{% else %}Excellent {{package.category}}{% endif %}</li>
+                            </ul>
+                        </div>   
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="tour-details-wrap">
+                        <h4 class="single-page-small-title">Description | {{package.title}}</h4>
+                        <p>{{package.description|safe}}.</p>
+                        <div class="package-included-area">
+                            <h4 class="single-page-small-title">Whats included</h4>
+                            <div class="row">
+                                {% for f in package.feature.all %}
+                                <div class="col-xl-4 col-sm-6">
+                                    <div class="single-package-included">
+                                        <img src="{{f.icon.url}}" width="50" alt="icons">
+                                        <h6>{{f.title}}</h6>
+                                        <p>{{f.short_intro}}</p>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                       
+                        
+                        <div class="row tag-share-area">
+                            <div class="col-lg-6">
+                                <span class="mr-2">Share:</span>
+                                <ul class="social-icon style-two">
+                                    <li>
+                                        <!-- <a class="facebook" href="#"><i class="fa fa-facebook"></i></a> -->
+                                        <div class="fb-share-button" data-href="{{request.build_absolute_uri}}" data-layout="button_count" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u"request.build_absolute_uri}}" class="fb-xfbml-parse-ignore"><i class="fa fa-facebook"></i></a></div>
+                                        
+                                    </li>
+                                    
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="comments-area">
+                            <div class="fb-comments" data-href="{{request.build_absolute_uri}}" data-width="100%" data-numposts="5"></div>
+                            
+                        
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="sidebar-area sidebar-area-4">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="widget tour-list-widget">
+                                <h3 style="text-align: center;font-weight: bold; color: #fb931d;">Place an inquiry about this {{package.category}}</h3>
+                                <hr>
+                                <div class="widget-tour-list-meta">
+                                    <div class="single-widget-search-input-title"><i class="fa fa-user"></i> Name</div>
+                                    <div class="single-widget-search-input">
+                                        <!-- <input type="text" placeholder="Name"> -->
+                                        {{inform.name}}
+                                    </div>
+                                    <div class="single-widget-search-input-title"><i class="fa fa-envelope"></i> Email</div>
+                                    <div class="single-widget-search-input">
+                                        <!-- <input type="text" placeholder="Email"> -->
+                                        {{inform.email}}
+                                    </div>
+                                    <div class="single-widget-search-input-title"><i class="fa fa-phone"></i> Phone</div>
+                                    <div class="single-widget-search-input">
+                                        <!-- <input type="text" placeholder="Phone"> -->
+                                        {{inform.mobile}}
+                                    </div>
+                                    
+                                    <div class="single-widget-search-input-title"><i class="fa fa-keyboard-o"></i> Message</div>
+                                    <div class="single-widget-search-input">
+                                        <!-- <textarea placeholder="Type"></textarea> -->
+                                        {{inform.message}}
+                                    </div>
+                                    <div class="text-lg-center text-left">
+                                        <!-- <a class="btn btn-yellow" href="#">Book Now <i class="fa fa-paper-plane"></i></a> -->
+                                        <button class="btn btn-yellow">Send Message</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="widget widget_categories">
+                            <h5 class="p-3">Browse our packages</h5>
+                            <ul>
+                                {% for pc in packagecategorylist %}
+                                <li><a href="{% url 'tntapp:packagecategorydetail' pc.title pc.id %}">{{pc.title}}</a> {{pc.package_set.count}}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="widget widget_categories">
+                            <h5 class="p-3">Packages by Destination</h5>
+                            <ul>
+                                {% for location in destinationlist %}
+                                <li><a href="{% url 'tntapp:clientlocationdetail' location.slug %}">{{location.name}}</a> {{location.package_set.count}}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="widget_ads">
+                            <a href="#"><img class="w-100" src="{% static 'clientstatic/img/others/01.png' %}" alt="img"></a>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- tour details area End -->
+
+
+{% endblock %}

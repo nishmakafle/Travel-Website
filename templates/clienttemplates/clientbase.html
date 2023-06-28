@@ -1,0 +1,350 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}{% endblock %} | La Globe Travels & Tours Pvt.Ltd </title>
+    <link rel=icon href="{% static 'clientstatic/img/favicon.png' %}" sizes="20x20" type="image/png">
+
+    <!-- Additional plugin css -->
+    <link rel="stylesheet" href="{% static 'clientstatic/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'clientstatic/css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'clientstatic/css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'clientstatic/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'clientstatic/css/slick.css' %}">
+    <link rel="stylesheet" href="{% static 'clientstatic/css/swiper.min.css' %}">
+    <link rel="stylesheet" href="{% static 'clientstatic/css/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static 'clientstatic/css/jquery-ui.min.css' %}">
+    <!-- icons -->
+    <link rel="stylesheet" href="{% static 'clientstatic/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'clientstatic/css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'clientstatic/css/line-awesome.min.css' %}">
+    <!-- main css -->
+    <link rel="stylesheet" href="{% static 'clientstatic/css/style.css' %}">
+    <!-- responsive css -->
+    <link rel="stylesheet" href="{% static 'clientstatic/css/responsive.css' %}">
+
+</head>
+<body>
+    <div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v6.0"></script>
+
+
+    <!-- preloader area start -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-inner">
+            <div class="spinner">
+                <div class="dot1"></div>
+                <div class="dot2"></div>
+            </div>
+        </div>
+    </div>
+    <!-- preloader area end -->
+
+    <!-- search popup start -->
+    <div class="body-overlay" id="body-overlay"></div>
+    <div class="search-popup" id="search-popup">
+        <form method="GET" action="/search/" class="search-form" >
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search....." name="q">
+            </div>
+            <button ><i class="fa fa-search"></i></button>
+        </form>
+    </div>
+    <!-- search popup End -->
+
+
+    <!-- navbar area start -->
+    <nav class="navbar navbar-area navbar-expand-lg nav-style-01">
+        <div class="container nav-container">
+            <div class="responsive-mobile-menu">
+                <div class="mobile-logo">
+                    <a href="{% url 'tntapp:clienthome' %}">
+                        <img src="{{organization.logo.url}}" alt="logo" style="height: 70px;" alt="logo">
+                    </a>
+                </div>
+                <button class="navbar-toggler float-right" type="button" data-toggle="collapse" data-target="#tp_main_menu" 
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggle-icon">
+                        <span class="line"></span>
+                        <span class="line"></span>
+                        <span class="line"></span>
+                    </span>
+                </button>
+                <div class="nav-right-content">
+                    <ul class="pl-0">
+                        <li class="top-bar-btn-booking">
+                            <a class="btn btn-yellow" href="{% url 'tntapp:clientcontact' %}">Contact us <i class="fa fa-paper-plane"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="collapse navbar-collapse" id="tp_main_menu">
+                <div class="logo-wrapper">
+                    <a href="{% url 'tntapp:clienthome' %}" class="main-logo">
+                        <img src="{{organization.logo.url}}" alt="logo" style="height: 60px; width: 200px; border-radius: 5px;">
+                        
+                    </a>
+                    <a href="{% url 'tntapp:clienthome' %}" class="sticky-logo">
+                        <img src="{{organization.logo.url}}" alt="logo" style="height: 60px; width: 200px;">
+                    </a>
+                </div>
+                <ul class="navbar-nav">
+                    <li class="active">
+                        <a href="{% url 'tntapp:clienthome' %}">Home</a>
+                        
+                    </li>
+                    <li class="menu-item-has-children">
+                        <a href="#">Company</a>
+                        <ul class="sub-menu">
+                            {% for cpage in cpages %}
+                            <li><a href="{% url 'tntapp:clientpagedetail' cpage.slug %}">{{cpage.title}}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <li class="menu-item-has-children">
+                        <a href="#">Activities</a>
+                        <ul class="sub-menu">
+                            {% for packagecategory in packagecategorylist %}
+                            <li><a href="{% url 'tntapp:packagecategorydetail' packagecategory.title packagecategory.id %}">{{packagecategory.title}}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <li class="menu-item-has-children">
+                        <a href="#">Destination</a>
+                        <ul class="sub-menu">
+                            {% for destination in destinationlist %}
+                            <li><a href="{% url 'tntapp:clientlocationdetail' destination.slug %}">{{destination.name}}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <a href="{% url 'tntapp:clientblog' %}">Blogs</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'tntapp:clientgallery' %}">Gallery</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'tntapp:clientfaq' %}">FAQs</a>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="nav-right-content">
+                <ul>
+                    
+                    
+                    <li>
+                        <a class="btn btn-yellow" href="{% url 'tntapp:clientcontact' %}">Contact Us <i class="fa fa-paper-plane"></i></a>
+                    </li>
+                    <!-- <li class="tp-lang">
+                        <div class="tp-lang-wrap">
+                            <select class="select single-select">
+                              <option value="1">ENG</option>
+                              <option value="2">BAN</option>
+                              <option value="3">Chinese</option>
+                              <option value="3">Spanish</option>
+                            </select>
+                        </div>
+                    </li> -->
+                    <li class="search">
+                        <i class="ti-search"></i>
+                    </li>
+                  
+                </ul>
+            </div>
+            
+        </div>
+    </nav>
+    {% block content %}
+    {% endblock %}
+    <!-- newslatter area Start -->
+    <div class="newslatter-area pd-top-120">
+        <div class="container">
+            <div class="newslatter-area-wrap border-tp-solid">
+                <div class="row">
+                    <div class="col-xl-3 col-lg-6 col-md-5 offset-xl-2">
+                        <div class="section-title mb-md-0">
+                            <h2 class="title">Newsletter</h2>
+                            <p>Sign up to receive the best offers</p>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-6 col-md-7 align-self-center offset-xl-1">
+                        <form method="POST" action="{% url 'tntapp:subscribe' %}" id="subsform">
+                                {% csrf_token %}
+                            <div class="input-group newslatter-wrap">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                                </div>
+                                
+                                    <!-- <input type="text" class="form-control" placeholder="Email"> -->
+                                    {{subsform.email}}
+                                    <div class="input-group-append">
+                                        <button class="btn btn-yellow" type="submit">Subscribe</button>
+                                        
+                                    </div>
+                                
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- newslatter area End -->
+    <!-- navbar area end -->
+
+
+   
+    <footer class="footer-area" style="background-image: url({% static 'clientstatic/img/bg/2.png' %});">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-widget widget">
+                        <div class="about_us_widget">
+                            <a href="{% url 'tntapp:clienthome' %}" class="" style="width: 100%; color: white; font-size: 20px;"> 
+                                    <img src="{{organization.logo.url}}" alt="logo" style="width: 80%; height: 100px; border-radius: 10px;">
+                                    
+                                </a>
+                             
+                            <p style="justify-content: center;">{{organization.about_us|striptags|truncatewords:25|safe}} <br><a style="border: 1px solid white; padding: 4px; border-radius: 4px; color: rgba(224, 236, 116, 0.561);" href="{% url 'tntapp:clientpagedetail' 'company-profile' %}">Know more...</a></p>
+                            
+                            <ul class="social-icon">
+                                <li>
+                                    {% if organization.facebook %} 
+                                    <a class="facebook" href=" {{organization.facebook}} " target="_blank"><i class="fa fa-facebook  "></i></a>
+                                    {% endif %}
+                                
+                                    {% if organization.instagram %}
+                                    <a class="instagram" href="{{organization.instagram}}" target="_blank"><i class="fa fa-instagram"></i></a>
+                                    {% endif %}
+                                
+                                    {% if organization.twitter %}
+                                    <a class="twitter" href="{{organization.twitter}}" target="_blank"><i class="fa fa-twitter"></i></a>
+                                    {% endif %}
+                                
+                                    {% if organization.youtube %}
+                                    <a class="twitter" href="{{organization.youtube}}" target="_blank"><i class="fa fa-youtube"></i></a>
+                                    {% endif %}
+                                
+                                    {% if organization.whatsapp %}
+                                    <a class="twitter" href="{{organization.whatsapp}}" target="_blank"><i class="fa fa-whatsapp"></i></a>
+                                    {% endif %}
+                                
+                                    {% if organization.viber %}
+                                    <a class="twitter" href="{{organization.viber}}" target="_blank"><i class="fa fa-phone"></i></a>
+                                    {% endif %}
+                                </li>
+                            </ul>
+                       </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-widget widget ">
+                        <div class="widget-contact">
+                            <h4 class="widget-title">Contact us</h4>
+                            <p>
+                                <i class="fa fa-map-marker"></i> 
+                                <span>{{organization.address}}</span>
+                            </p>
+                            <p class="location"> 
+                                <i class="fa fa-envelope-o"></i>
+                                <span>{{organization.email}}</span>
+                            </p>
+                            <p class="telephone">
+                                <i class="fa fa-phone base-color"></i> 
+                                <span>
+                                    {{organization.contact_no}}
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <div class="footer-widget widget">
+                        <h4 class="widget-title">Quick Link</h4>
+                        <ul class="widget_nav_menu">
+                            <li><a href="{% url 'tntapp:clienthome' %}">Home</a></li>
+                            <li><a href="{% url 'tntapp:clienttourlist' %}">All Packages</a></li>
+                            <li><a href="{% url 'tntapp:clientgallery' %}">Gallery</a></li>
+                            <li><a href="{% url 'tntapp:clientfaq' %}">Faq</a></li>
+                            <li><a href="{% url 'tntapp:clienttermscondition' %}">Terms and Condition</a></li>
+                            <li><a href="{% url 'tntapp:clientprivacypolicy' %}">privacy policy</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-widget widget">
+                        <h4 class="widget-title">Tour Gallery</h4>
+                        <ul class="widget-instagram-feed">
+                            {% for image in allimages %}
+                            <li><a href="{% url 'tntapp:clientgallerydetail' image.album.id %}"><img src="{{image.image.url}}" style="height: 100px; object-fit: cover;" alt="img"></a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright-inner">
+            <div class="copyright-text">
+                Copyrignt  &copy; {% now " Y " %}Powered  by <a href="https://www.sarobartech.com/" target="_blank"><i class="fa fa-heart"></i><span>Sarobar Technology.</span></a>
+            </div>
+        </div>
+    </footer>
+    <!-- footer area end -->
+
+    <!-- back to top area start -->
+    <div class="back-to-top">
+        <span class="back-top"><i class="fa fa-angle-up"></i></span>
+    </div>
+    <!-- back to top area end -->
+
+
+    <!-- Additional plugin js -->
+    <script src="{% static 'clientstatic/js/jquery-2.2.4.min.js' %}"></script>
+    <script src="{% static 'clientstatic/js/popper.min.js' %}"></script>
+    <script src="{% static 'clientstatic/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'clientstatic/js/jquery.magnific-popup.js' %}"></script>
+    <script src="{% static 'clientstatic/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'clientstatic/js/wow.min.js' %}"></script>
+    <script src="{% static 'clientstatic/js/slick.js' %}"></script>
+    <script src="{% static 'clientstatic/js/waypoints.min.js' %}"></script>
+    <script src="{% static 'clientstatic/js/jquery.counterup.min.js' %}"></script>
+    <script src="{% static 'clientstatic/js/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'clientstatic/js/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'clientstatic/js/swiper.min.js' %}"></script>
+    <script src="{% static 'clientstatic/js/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static 'clientstatic/js/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'clientstatic/js/jarallax.min.js' %}"></script>
+
+    <!-- main js -->
+    <script src="{% static 'clientstatic/js/main.js' %}"></script>
+    <script>
+        $(document).ready(function(){
+            $("#subsform").on("submit", function(e){
+                e.preventDefault();
+                var formData = $(this).serialize();
+                var url = $(this).attr("action")
+                $.ajax({
+                    url: url,
+                    method: 'post',
+                    data: formData,
+                    success: function(d){
+                        alert(d.status +": " + d.message)
+                    }
+
+                })
+            })
+        })
+    </script>
+    {% block js %}{% endblock %}
+</body>
+
+
+</html>

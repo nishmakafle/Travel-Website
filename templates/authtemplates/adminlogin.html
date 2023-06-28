@@ -1,0 +1,102 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Sarobar Technology, Marigold CMS</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+
+	<link rel="stylesheet" type="text/css" href="{% static 'authstatic/vendor/bootstrap/css/bootstrap.min.css' %}">
+
+	<link rel="stylesheet" type="text/css" href="{% static 'authstatic/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+
+	<link rel="stylesheet" type="text/css" href="{% static 'authstatic/fonts/iconic/css/material-design-iconic-font.min.css' %}">
+
+	<link rel="stylesheet" type="text/css" href="{% static 'authstatic/vendor/animate/animate.css' %}">
+
+	<link rel="stylesheet" type="text/css" href="{% static 'authstatic/vendor/css-hamburgers/hamburgers.min.css' %}">
+
+	<link rel="stylesheet" type="text/css" href="{% static 'authstatic/vendor/animsition/css/animsition.min.css' %}">
+
+	<link rel="stylesheet" type="text/css" href="{% static 'authstatic/vendor/select2/select2.min.css' %}">
+
+	<link rel="stylesheet" type="text/css" href="{% static 'authstatic/vendor/daterangepicker/daterangepicker.css' %}">
+
+	<link rel="stylesheet" type="text/css" href="{% static 'authstatic/css/util.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'authstatic/css/main.css' %}">
+
+</head>
+<body>
+	 
+	<div class="limiter">
+		<div class="container-login100" style="background-image: url({% static 'authstatic/images/bg-1.png' %});">
+			<div class="wrap-login100">
+				<form class="login100-form validate-form" method="POST">
+					{% csrf_token %}
+					<span class="login100-form-logo">
+						<i class="zmdi zmdi-landscape"></i>
+					</span>
+					<span class="login100-form-title p-b-34 p-t-27">
+						Admin Login
+					</span>
+					<p>
+						{{ form.non_field_errors }}
+						{% if error %}
+						<li class="text-warning">**{{error}}</li>
+						{% endif %}
+					</p>
+					<div class="wrap-input100 validate-input" data-validate="Enter username">
+						{{form.username}}
+						{{form.username.errors}}
+						<span class="focus-input100" data-placeholder="&#xf207;"></span>
+					</div>
+					<div class="wrap-input100 validate-input" data-validate="Enter password">
+						{{form.password}}
+						{{form.password.errors}}
+						<span class="focus-input100" data-placeholder="&#xf191;"></span>
+					</div>
+					<!-- <div class="contact100-form-checkbox">
+						<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+						<label class="label-checkbox100" for="ckb1">
+							Remember me
+						</label>
+					</div> -->
+					<div class="container-login100-form-btn">
+						<button class="login100-form-btn">
+							Login
+						</button>
+					</div>
+					<!-- <div class="text-center p-t-90">
+						<a class="txt1" href="#">
+							Forgot Password?
+						</a>
+					</div> -->
+				</form>
+			</div>
+		</div>
+	</div>
+	<div id="dropDownSelect1"></div>
+
+	<script src="{% static 'authstatic/vendor/jquery/jquery-3.2.1.min.js' %}" type="4fb9758df21ac1a1f5f3bc2d-text/javascript"></script>
+
+	<script src="{% static 'authstatic/vendor/animsition/js/animsition.min.js' %}" type="4fb9758df21ac1a1f5f3bc2d-text/javascript"></script>
+
+	<script src="{% static 'authstatic/vendor/bootstrap/js/popper.js' %}" type="4fb9758df21ac1a1f5f3bc2d-text/javascript"></script>
+	<script src="{% static 'authstatic/vendor/bootstrap/js/bootstrap.min.js' %}" type="4fb9758df21ac1a1f5f3bc2d-text/javascript"></script>
+
+	<script src="{% static 'authstatic/vendor/select2/select2.min.js' %}" type="4fb9758df21ac1a1f5f3bc2d-text/javascript"></script>
+
+	<script src="{% static 'authstatic/vendor/daterangepicker/moment.min.js' %}" type="4fb9758df21ac1a1f5f3bc2d-text/javascript"></script>
+	<script src="{% static 'authstatic/vendor/daterangepicker/daterangepicker.js' %}" type="4fb9758df21ac1a1f5f3bc2d-text/javascript"></script>
+
+	<script src="{% static 'authstatic/vendor/countdowntime/countdowntime.js' %}" type="4fb9758df21ac1a1f5f3bc2d-text/javascript"></script>
+
+	<script src="{% static 'authstatic/js/main.js' %}" type="4fb9758df21ac1a1f5f3bc2d-text/javascript"></script>
+
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13" type="4fb9758df21ac1a1f5f3bc2d-text/javascript"></script>
+
+	<script src="https://ajax.cloudflare.com/cdn-cgi/scripts/95c75768/cloudflare-static/rocket-loader.min.js" data-cf-settings="4fb9758df21ac1a1f5f3bc2d-|49" defer=""></script></body>
+	</html>
